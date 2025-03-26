@@ -1,7 +1,67 @@
-#root {
-  color: red;
+/* <div id="root">
+<template>
+  <section class="film-card">
+    <h3>File Title</h3>
+    <img>
+    <p description>About the film</p>
+  </section>
+</template>
+</div> */
+/* image has a class of episode-image */
+body{
+  margin: 0;
+  padding: 0;
 }
-#film-card{
-  color: aqua;
-  background-color: black;
+#root{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: grey;
+  padding-bottom: 20px;
+  
+}
+footer{
+  text-align: center;
+  margin: 20px 0;
+  padding: 20px;
+
+}
+footer a{
+  text-decoration: none;
+  color: #007bff;
+  font-size: 26px;
+}
+
+.film-card{
+  
+  align-items: start;
+  justify-content: start;
+  align-self: flex-start;
+  width: 300px;
+  height: 520px;
+  margin: 10px;
+  box-shadow: 0px 0px 20px rgba(242, 238, 238, 0.579);
+  border-radius: 10px;
+  background-color: white;
+}
+.episode-image{
+  position: relative;
+  top: 20px;
+  border-radius: 10px;
+ margin-left: 20px;
+ box-shadow: 0 0 20px rgba(75, 197, 237, 0.682);
+}
+.film-card >p{
+  width: 80%;
+  padding: 15px;
+  text-align: justify;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.film-card h3{
+  color: rgb(75, 74, 74);
+  white-space: pre;
+  text-align: center;
+  /* padding-left: 20px; */
+  text-shadow: 0px 0px 20px;
 }

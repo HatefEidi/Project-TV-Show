@@ -1,49 +1,39 @@
-//You can edit ALL of the code here
-
 import { getOneEpisode, getAllEpisodes } from "./episodes.js"; // Import functions
 
 function setup() {
-  const oneEpisode = getOneEpisode();
-
-  console.log(oneEpisode);
-  makePageForEpisodes(oneEpisode);
-}
-// {/* <template id="film-card">
-//         <section>
-//           <h3>File Title</h3>
-//           <p description>About the film</p>
-//         </section>
-//       </template> */}
-
-const rootElem = document.getElementById("root");
-
-
-const filmCard = document.getElementById("film-card").content.cloneNode(true);
-
-function makePageForEpisodes(episodeList) {
-  // rootElem.textContent = `Got ${episodeList.length} episode(s)`;
-
-//Film Title, h3
-const filmTitle = filmCard.querySelector("h3");
-filmTitle.textContent = `${getOneEpisode().name} -S${getOneEpisode().season.toString().padStart(2, 0)}E${getOneEpisode().number.toString().padStart(2, 0)}`;
-
-
-//Film description, p
-const filmDescription = filmCard.querySelector("p");
-//this is to prevent the <p> element showing up in the HTML, the other way is to set innerHTML to the summary
-filmDescription.innerText = getOneEpisode().summary.replace(/<\/?p>/g, "");
-
-
-const filmImage = document.createElement("img");
-filmImage.src = getOneEpisode().image.medium;
-filmImage.alt = getOneEpisode().name;
-filmImage.classList.add("film-image");
-//Appending film card tot he body
-
-filmCard.append(filmTitle, filmImage,filmDescription)
-rootElem.appendChild(filmCard);
+  const allEpisodes = getAllEpisodes();
+  makePageForEpisodes(allEpisodes);
   
 }
+const template = document.querySelector("template");
 
+
+const createEpisodeCard = (episode) => {
+  const clone = template.content.cloneNode(true);
+
+  // Setting the h3 text content to the episode name
+  clone.querySelector("h3").textContent = `${episode.name} \n S${episode.season.toString().padStart(2, 0)}E${episode.number.toString().padStart(2, 0)}`;
+
+  // Setting the description text content to the episode summary
+  clone.querySelector("p").textContent = episode.summary.replace(/<\/?p>/g, "");
+
+  // Setting the image src to the episode image
+  const img = clone.querySelector("img");
+  img.src = episode.image.medium;
+  img.alt = episode.name;
+  img.classList.add("episode-image");
+
+  return clone;
+};
+
+
+function makePageForEpisodes(episodeList) {
+  const rootElem = document.getElementById("root");
+  rootElem.textContent = ""; // Clear previous content before adding new episodes
+
+  const filmCards = episodeList.map(createEpisodeCard); // Create all episode cards first
+
+  rootElem.append(...filmCards); // Append all episode cards at once
+}
 
 window.onload = setup;

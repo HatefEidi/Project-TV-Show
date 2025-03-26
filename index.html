@@ -10,12 +10,13 @@
 
   <body>
     <div id="root">
-      <template id="film-card">
-        <section>
-          <h3>File Title</h3>
-          <p description>About the film</p>
-        </section>
-      </template>
+    <template>
+      <section class="film-card">
+        <h3>File Title</h3>
+        <img>
+        <p description>About the film</p>
+      </section>
+    </template>
     </div>
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
@@ -23,5 +24,8 @@
 
     <!-- Loads YOUR javascript code -->
     <script defer type="module" src="script.js"></script>
+    <footer>
+     <p>All the data mentioned in this website is drawn from<br><a href="https://www.tvmaze.com/api#licensing">TV Maze</a></p>
+    </footer>
   </body>
 </html>
