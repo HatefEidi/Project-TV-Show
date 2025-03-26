@@ -1,6 +1,11 @@
 //You can edit ALL of the code here
+
+import { getOneEpisode, getAllEpisodes } from "./episodes.js"; // Import functions
+
 function setup() {
   const allEpisodes = getAllEpisodes();
+
+  console.log(allEpisodes);
   makePageForEpisodes(allEpisodes);
 }
 

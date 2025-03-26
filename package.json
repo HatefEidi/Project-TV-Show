@@ -1,0 +1,20 @@
+{
+  "name": "project-tv-show",
+  "version": "1.0.0",
+  "description": "TV show project",
+  "homepage": "https://github.com/HatefEidi/Project-TV-Show#readme",
+  "bugs": {
+    "url": "https://github.com/HatefEidi/Project-TV-Show/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HatefEidi/Project-TV-Show.git"
+  },
+  "license": "ISC",
+  "author": "Hatef Eidi",
+  "type": "module",
+  "main": "episodes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
