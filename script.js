@@ -2,7 +2,7 @@ import { getOneEpisode, getAllEpisodes } from "./episodes.js"; // Import functio
 
 function setup() {
   const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  render(allEpisodes);
   
 }
 const template = document.querySelector("template");
@@ -27,8 +27,8 @@ const createEpisodeCard = (episode) => {
 };
 
 
-function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
+const rootElem = document.getElementById("root");
+function render(episodeList) {
   rootElem.textContent = ""; // Clear previous content before adding new episodes
 
   const filmCards = episodeList.map(createEpisodeCard); // Create all episode cards first
