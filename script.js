@@ -49,7 +49,7 @@ function render(episodeList) {
 }
 function setupSearch(allEpisodes) {
   searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase();
+    const querY = searchInput.value.toLowerCase();
     
     const filteredEpisodes = allEpisodes.filter(ep =>
       ep.name.toLowerCase().includes(query) || ep.summary.toLowerCase().includes(query)
