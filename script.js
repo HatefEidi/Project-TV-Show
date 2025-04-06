@@ -1,7 +1,7 @@
 import { getOneEpisode, getAllEpisodes } from "./episodes.js"; // Import functions
 
+const allEpisodes = getAllEpisodes();
 function setup() {
-  const allEpisodes = getAllEpisodes();
   render(allEpisodes);
   
 }
