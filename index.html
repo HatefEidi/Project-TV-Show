@@ -9,17 +9,22 @@
   </head>
 
   <body>
-    <div id="root">
+    <select id="episode-select">
+      <option value="all">All Episodes</option>
+    </select>
+    <input type="text" id="search-box" placeholder="Search episodes..." />
+    <span id="result-count"></span>
+    <div id="root"></div>
     <template>
+      <label>Search <input type="text" id="search" /></label>
       <section class="film-card">
         <h3>File Title</h3>
         <img>
         <p class="scrollable" description>About the film</p>
       </section>
     </template>
-    </div>
-
-    <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
+   
+      <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script defer type="module" src="episodes.js"></script>
 
     <!-- Loads YOUR javascript code -->

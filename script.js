@@ -2,10 +2,21 @@ import { getOneEpisode, getAllEpisodes } from "./episodes.js"; // Import functio
 
 const allEpisodes = getAllEpisodes();
 function setup() {
+  const allEpisodes = getAllEpisodes();
+  console.log(getAllEpisodes()); // Should log an array of episodes
+
   render(allEpisodes);
+  populateDropdown(allEpisodes);
+  setupDropdown(allEpisodes);
+  setupSearch(allEpisodes);
   
 }
 const template = document.querySelector("template");
+const searchInput = document.getElementById("search-box");
+const episodeSelect = document.getElementById("episode-select");
+
+console.log(searchInput);
+const countResult = document.getElementById("result-count")
 
 
 const createEpisodeCard = (episode) => {
@@ -28,12 +39,47 @@ const createEpisodeCard = (episode) => {
 
 
 const rootElem = document.getElementById("root");
+
 function render(episodeList) {
   rootElem.textContent = ""; // Clear previous content before adding new episodes
 
   const filmCards = episodeList.map(createEpisodeCard); // Create all episode cards first
 
   rootElem.append(...filmCards); // Append all episode cards at once
+  countResult.textContent = `Showing ${episodeList.length} episodes`;
 }
+function setupSearch(allEpisodes) {
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    
+    const filteredEpisodes = allEpisodes.filter(ep =>
+      ep.name.toLowerCase().includes(query) || ep.summary.toLowerCase().includes(query)
+    );
+
+    render(filteredEpisodes);
+  });
+}
+function populateDropdown(episodes) {
+  episodes.forEach((ep) => {
+    const option = document.createElement("option");
+    option.value = ep.id;
+    option.textContent = `S${ep.season.toString().padStart(2, '0')}E${ep.number.toString().padStart(2, '0')} - ${ep.name}`;
+    episodeSelect.appendChild(option);
+  });
+}
+function setupDropdown(allEpisodes) {
+  episodeSelect.addEventListener("change", () => {
+    const selectedId = episodeSelect.value;
+    if (selectedId === "all") {
+      render(allEpisodes);
+    } else {
+      const selectedEpisode = allEpisodes.find(ep => ep.id.toString() === selectedId);
+      render([selectedEpisode]);
+    }
+    searchInput.value = ""; // Clear search input when dropdown is used
+  });
+}
+
+
 
 window.onload = setup;
