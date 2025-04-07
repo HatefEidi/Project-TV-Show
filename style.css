@@ -100,6 +100,6 @@ footer a{
 #nav-bar{
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
 }
