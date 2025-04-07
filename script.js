@@ -1,21 +1,22 @@
 import { getOneEpisode, getAllEpisodes } from "./episodes.js"; // Import functions
 
 const allEpisodes = getAllEpisodes();
-function setup() {
-  const allEpisodes = getAllEpisodes();
-  console.log(getAllEpisodes()); // Should log an array of episodes
 
-  render(allEpisodes);
-  populateDropdown(allEpisodes);
-  setupDropdown(allEpisodes);
-  setupSearch(allEpisodes);
-  
+var state={
+  allEpisodes: allEpisodes,
+  searchTerm: ""
+}
+
+function setup() {
+  render(state.allEpisodes);
+  populateDropdown(state.allEpisodes);
+  setupDropdown(state.allEpisodes);
+  setupSearch(state.allEpisodes);
 }
 const template = document.querySelector("template");
 const searchInput = document.getElementById("search-box");
 const episodeSelect = document.getElementById("episode-select");
 
-console.log(searchInput);
 const countResult = document.getElementById("result-count")
 
 
@@ -46,19 +47,24 @@ function render(episodeList) {
   const filmCards = episodeList.map(createEpisodeCard); // Create all episode cards first
 
   rootElem.append(...filmCards); // Append all episode cards at once
-  countResult.textContent = `Showing ${episodeList.length} episodes`;
+  countResult.textContent = howManyEpisodes(episodeList); // Update the count of episodes found
 }
+
+
 function setupSearch(allEpisodes) {
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase();
-    
-    const filteredEpisodes = allEpisodes.filter(ep =>
-      ep.name.toLowerCase().includes(query) || ep.summary.toLowerCase().includes(query)
+    const searchTerm= state.searchTerm = query; // Update the state with the search term
+    const filteredEpisodes = state.allEpisodes.filter(ep =>
+      ep.name.toLowerCase().includes(searchTerm) || ep.summary.toLowerCase().includes(searchTerm) 
+      || ep.season.toString().includes(searchTerm) || ep.number.toString().includes(searchTerm)
     );
 
     render(filteredEpisodes);
   });
 }
+
+
 function populateDropdown(episodes) {
   episodes.forEach((ep) => {
     const option = document.createElement("option");
@@ -67,6 +73,8 @@ function populateDropdown(episodes) {
     episodeSelect.appendChild(option);
   });
 }
+
+
 function setupDropdown(allEpisodes) {
   episodeSelect.addEventListener("change", () => {
     const selectedId = episodeSelect.value;
@@ -80,6 +88,10 @@ function setupDropdown(allEpisodes) {
   });
 }
 
-
+function howManyEpisodes(episodes) {
+  return episodes.length===0? `No episode was found` : episodes.length === 1
+    ? `${episodes.length} episode was found`
+    : `${episodes.length} episodes found`;
+ }
 
 window.onload = setup;

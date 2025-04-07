@@ -76,7 +76,7 @@ footer a{
 #search-box,
 #episode-select {
   padding: 10px;
-  margin: 10px 0;
+  margin: 20px 20px;
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -90,4 +90,16 @@ footer a{
   display: block;
   margin: 10px 0;
   font-weight: bold;
+}
+
+#result-count{
+  margin: 20px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+#nav-bar{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
 }
