@@ -1,11 +1,24 @@
-import { getOneEpisode, getAllEpisodes } from "./episodes.js"; // Import functions
-
-const allEpisodes = getAllEpisodes();
 
 var state={
-  allEpisodes: allEpisodes,
+  allEpisodes:[] ,
   searchTerm: ""
 }
+const endpoint ="https://api.tvmaze.com/shows/82/episodes"
+const fetchEpisodes = async () => {
+  const loadingElem = document.getElementById("loading");
+  loadingElem.style.display = "block"; // Show loading
+  try {
+    const response = await fetch(endpoint);
+    const episodes = await response.json();
+    state.allEpisodes = episodes;
+    setup(); // Only run setup *after* data is ready
+  } catch (error) {
+    loadingElem.innerText = "Error fetching data. Please try again later."+ error;
+  }
+  finally {
+    loadingElem.style.display = "none"; // Hide loading
+  }
+};
 
 function setup() {
   render(state.allEpisodes);
@@ -94,4 +107,4 @@ function howManyEpisodes(episodes) {
     : `${episodes.length} episodes found`;
  }
 
-window.onload = setup;
+window.onload = fetchEpisodes;

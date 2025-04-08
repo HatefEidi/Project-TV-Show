@@ -103,3 +103,9 @@ footer a{
   justify-content: space-between;
   align-items: center;
 }
+#loading {
+  text-align: center;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
