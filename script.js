@@ -6,7 +6,19 @@ var state={
   showsCache:{}
 
 };
-const endpoint ="https://api.tvmaze.com/shows/82/episodes"
+const endpoint ="https://api.tvmaze.com/shows"
+const fetchShows = async () => {
+  const loadingElem = document.getElementById("loading");
+  loadingElem.style.display = "block";
+  try {
+    const response = await fetch(endpoint);
+    const shows = await response.json();
+    state.allShows = shows.sort((a, b) => 
+    a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+  )
+  populateShowsDropdown(state.allShows)
+  }
+}
 const fetchEpisodes = async () => {
   const loadingElem = document.getElementById("loading");
   loadingElem.style.display = "block"; // Show loading
@@ -111,8 +123,11 @@ function howManyEpisodes(episodes) {
  }
 
  function populateShowsDropdown(shows){
+  showSelect.addEventListener("change", () => {
   const showSelect = document.createElementById("shows-dropdown")
   showSelect.innerHTML = "";
+  });
+
 
   shows.forEach(show =>{
     const option = document.createElement("option");
