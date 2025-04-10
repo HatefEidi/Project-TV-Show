@@ -1,8 +1,11 @@
 
 var state={
   allEpisodes:[] ,
-  searchTerm: ""
-}
+  searchTerm: "",
+  allShows: [],
+  showsCache:{}
+
+};
 const endpoint ="https://api.tvmaze.com/shows/82/episodes"
 const fetchEpisodes = async () => {
   const loadingElem = document.getElementById("loading");
@@ -105,6 +108,19 @@ function howManyEpisodes(episodes) {
   return episodes.length===0? `No episode was found` : episodes.length === 1
     ? `${episodes.length} episode was found`
     : `${episodes.length} episodes found`;
+ }
+
+ function populateShowsDropdown(shows){
+  const showSelect = document.createElementById("shows-dropdown")
+  showSelect.innerHTML = "";
+
+  shows.forEach(show =>{
+    const option = document.createElement("option");
+    option.value = show.id;
+    option.textContent = show.name;
+    showSelect.appendchild(option);
+
+  })
  }
 
 window.onload = fetchEpisodes;
