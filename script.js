@@ -16,16 +16,30 @@ const fetchShows = async () => {
     state.allShows = shows.sort((a, b) => 
     a.name.toLowerCase().localeCompare(b.name.toLowerCase())
   )
-  populateShowsDropdown(state.allShows)
+  populateShowsDropdown(state.allShows);
+
+  const firstShowId = state.allShows[0].id;
+  await fetchEpisodes(firstShowId); 
+  } catch (error) {
+    loadingElem.innerText = "Error loading shows. " + error;
+
+  } finally {
+    loadingElem.style.display = "none";
   }
+
+
 }
-const fetchEpisodes = async () => {
+const fetchEpisodes = async (showId) => {
   const loadingElem = document.getElementById("loading");
   loadingElem.style.display = "block"; // Show loading
   try {
+    if (state.showsCache[showId]) {
+      state.allEpisodes = state.showsCache[showId]
+    } else {
     const response = await fetch(endpoint);
     const episodes = await response.json();
     state.allEpisodes = episodes;
+    }
     setup(); // Only run setup *after* data is ready
   } catch (error) {
     loadingElem.innerText = "Error fetching data. Please try again later."+ error;
