@@ -137,8 +137,12 @@ function howManyEpisodes(episodes) {
  }
 
  function populateShowsDropdown(shows){
-  showSelect.addEventListener("change", () => {
-  const showSelect = document.createElementById("shows-dropdown")
+  showSelect.addEventListener("change", async () => {
+  const selectedShowId = showSelect.value;
+  searchInput.value = "";
+  episodeSelect.innerHTML = "";
+  await fetchEpisodes(selectedShowId);
+  document.createElementById("shows-dropdown")
   showSelect.innerHTML = "";
   });
 
