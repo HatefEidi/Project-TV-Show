@@ -11,7 +11,8 @@
   <body>
     <div id="nav-bar">
 
-      <select id="shows-dropdown"></select>
+      <select id="shows-dropdown" description "All Shows"></select>
+        
       <select id="episode-select">
         <option value="all">All Episodes</option>
       </select>
@@ -24,16 +25,16 @@
     <template>
       <section class="film-card">
         <h3>File Title</h3>
-        <img>
-        <p class="scrollable" description>About the film</p>
+        <img/>
+        <p class="scrollable">About the film</p>
       </section>
     </template>
    
       <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <script defer type="module" src="episodes.js"></script>
+    <!-- <script defer type="module" src="episodes.js"></script> -->
 
     <!-- Loads YOUR javascript code -->
-    <script defer type="module" src="script.js"></script>
+    <script defer src="script.js"></script>
     <footer>
      <p>All the data mentioned in this website is drawn from<br><a href="https://www.tvmaze.com/api#licensing">TV Maze</a></p>
     </footer>
