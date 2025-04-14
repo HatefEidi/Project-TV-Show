@@ -10,12 +10,16 @@
 
   <body>
     <div id="nav-bar">
-
-      <select id="shows-dropdown" description "All Shows"></select>
+      
+    <label for="shows-dropdown"></label>
+      <select id="shows-dropdown" title="Select a TV Shows"></select>
         
-      <select id="episode-select">
+      <div id="episode-select-content">
+      <label for=""episode-select>Episodes:</label>
+      <select id="episode-select" title="Select an Episode">
         <option value="all">All Episodes</option>
       </select>
+      </div>
       <input type="text" id="search-box" placeholder="Search episodes..." />
       <span id="result-count"></span>
     </div>
@@ -30,8 +34,6 @@
       </section>
     </template>
    
-      <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <!-- <script defer type="module" src="episodes.js"></script> -->
 
     <!-- Loads YOUR javascript code -->
     <script defer src="script.js"></script>

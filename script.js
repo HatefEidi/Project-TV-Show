@@ -13,15 +13,16 @@ const fetchShows = async () => {
   try {
     const response = await fetch(endpoint);
     const shows = await response.json();
-    //console.log(fetchShows)
+    //console.log("fetched Shows", shows);
     state.allShows = shows.sort((a, b) => 
     a.name.toLowerCase().localeCompare(b.name.toLowerCase())
   )
   populateShowsDropdown(state.allShows);
 
-  const firstShowId = state.allShows[0].id;
-  await fetchEpisodes(firstShowId); 
-  } catch (error) {
+  renderTvShow(state.allShows); 
+  episodeSelectContent.style.display = "none";
+
+ } catch (error) {
     loadingElem.innerText = "Error loading shows. " + error;
 
   } finally {
@@ -51,9 +52,10 @@ const fetchEpisodes = async (showId) => {
   }
 };
 
+
 function setup() {
   render(state.allEpisodes);
-  populateDropdown(state.allEpisodes);
+  populateEpisodeDropdown(state.allEpisodes);
   setupDropdown(state.allEpisodes);
   setupSearch(state.allEpisodes);
  
@@ -87,6 +89,7 @@ const createEpisodeCard = (episode) => {
 
 const rootElem = document.getElementById("root");
 
+
 function render(episodeList) {
   rootElem.textContent = ""; // Clear previous content before adding new episodes
 
@@ -111,7 +114,7 @@ function render(episodeList) {
 }
 
 
-function populateDropdown(episodes) {
+function populateEpisodeDropdown(episodes) {
   episodeSelect.innerHTML = "";
   const allOption = document.createElement("option");
   allOption.value = "all";
@@ -147,9 +150,42 @@ function howManyEpisodes(episodes) {
     : `${episodes.length} episodes found`;
  }
 
- function populateShowsDropdown(shows){
-  showSelect.innerHTML = "";
+ //Selecting the content of the TV Show select label and select
+ const episodeSelectContent = document.getElementById("episode-select-content");
 
+// Added a function for creating my all Tv shows 
+ function renderTvShow(shows) {
+  rootElem.innerHTML = ""; // Clear previous content
+  countResult.textContent = `${shows.length} TV shows found`;
+
+  shows.forEach(show => {
+    //console.log("Rendering show:, show);
+    const card = document.createElement("div");
+    card.classList.add("show-card", "film-card");
+
+    const title = document.createElement("h3");
+    title.textContent = show.name;
+
+    const img = document.createElement("img");
+    img.src = show.image?.medium || "";
+    img.alt = show.name;
+    img.classList.add("show-image");
+
+    //const summary = document.createElement("p");
+    //summary.innerHTML = show.summary || "No Summary Available.";
+    card.append(title, img);
+    //console.log("Rendering show card:", show.name);
+    rootElem.appendChild(card);
+});
+  };
+
+  function populateShowsDropdown(shows){
+  showSelect.innerHTML = "";
+  const allOption = document.createElement("option");
+  allOption.value = "all";
+  allOption.textContent = "All TV Shows";
+  showSelect.appendChild(allOption);
+    
   shows.forEach(show =>{
     const option = document.createElement("option");
     option.value = show.id;
@@ -162,12 +198,15 @@ function howManyEpisodes(episodes) {
   const selectedShowId = showSelect.value;
   searchInput.value = "";
   episodeSelect.innerHTML = "";
-  await fetchEpisodes(selectedShowId);
-  
-  });
-
-
-  
- }
+  if (showSelect.value === "all"){
+    renderTvShow(state.allShows);
+    episodeSelectContent.style.display = "none"
+    episodeSelect.innerHTML = "";
+  } else {
+    await fetchEpisodes(selectedShowId);
+      episodeSelectContent.style.display = "block";
+  }
+ });
+}
 
 window.onload = fetchShows;
