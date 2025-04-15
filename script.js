@@ -104,12 +104,24 @@ function render(episodeList) {
    searchInput.addEventListener("input", () => {
      const query = searchInput.value.toLowerCase();
      const searchTerm= state.searchTerm = query; // Update the state with the search term
-     const filteredEpisodes = state.allEpisodes.filter(ep =>
-       ep.name.toLowerCase().includes(searchTerm) || ep.summary.toLowerCase().includes(searchTerm) 
-       || ep.season.toString().includes(searchTerm) || ep.number.toString().includes(searchTerm)
-     );
+     if (showSelect.value !== "all") {
+      const filteredEpisodes = state.allEpisodes.filter(ep =>
+        ep.name.toLowerCase().includes(searchTerm) || ep.summary.toLowerCase().includes(searchTerm) 
+        || ep.season.toString().includes(searchTerm) || ep.number.toString().includes(searchTerm)
+      );
+      
+      render(filteredEpisodes);
+      
+    }
+    else {
+      const filteredTvShows = state.allShows.filter(show =>
+        show.name.toLowerCase().includes(searchTerm) || 
+        show.summary.toLowerCase().includes(searchTerm) || show.genres.join(", ").toLowerCase().includes(searchTerm) || 
+        show.language.toLowerCase().includes(searchTerm) || show.schedule.time.toLowerCase().includes(searchTerm) || show.schedule.days.join(", ").toLowerCase().includes(searchTerm)
+      );
+     renderTvShow(filteredTvShows);
+    }
 
-    render(filteredEpisodes);
    });
 }
 
@@ -165,15 +177,31 @@ function howManyEpisodes(episodes) {
 
     const title = document.createElement("h3");
     title.textContent = show.name;
+    
+    title.addEventListener("click", () => {
+      fetchEpisodes(show.id);
+      episodeSelectContent.style.display = "block";
+      episodeSelect.value = "all";
+      searchInput.value = ""; // Clear search input when a show is selected`;
+      showSelect.value = show.id;
+
+    });
 
     const img = document.createElement("img");
     img.src = show.image?.medium || "";
     img.alt = show.name;
     img.classList.add("show-image");
 
+    const otherDetails = document.createElement("p");
+    otherDetails.classList.add("other-details");
+    otherDetails.innerHTML = `Language: ${show.language} <br> Genres: ${show.genres.join(", ")} <br> Rating: ${show.rating.average || "N/A"} <br> Status: ${show.status} <br> Premiered: ${show.premiered || "N/A"} <br> Schedule: ${show.schedule.time || "N/A"} ${show.schedule.days ? show.schedule.days.join(", ") : ""}`;
+
+    const summary = document.createElement("p");
+    summary.innerHTML = show.summary || "No Summary Available.";
+
     //const summary = document.createElement("p");
     //summary.innerHTML = show.summary || "No Summary Available.";
-    card.append(title, img);
+    card.append(title, img, otherDetails, summary);
     //console.log("Rendering show card:", show.name);
     rootElem.appendChild(card);
 });
